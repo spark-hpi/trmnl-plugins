@@ -13,3 +13,6 @@ custom_fields:
 # override variables
 variables:
   trmnl: {}
+  display_mode: meme
+  meme_image_url: https://picsum.photos/600/400
+  meme_message: When the most-liked meme finally shows its caption
