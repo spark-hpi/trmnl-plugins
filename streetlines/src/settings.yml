@@ -1,0 +1,18 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.trmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+id: 019f1ef5-7921-798e-8017-aebcee0544ff
+name: Streetlines — Tomic Riedel
+strategy: polling
+polling_verb: get
+polling_url: https://dummyjson.com/quotes/1
+polling_headers: ''
+serverless_language: python
+no_screen_padding: 'yes'
+dark_mode: 'no'
+static_data: ''
+framework_version: latest
+refresh_interval: 60
