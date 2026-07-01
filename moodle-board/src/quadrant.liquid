@@ -1,0 +1,32 @@
+{% comment %} compact upcoming deadlines · single column (400x240, tightest view). Same self-
+   contained list as half_vertical (built inline from `courses`, not shared.liquid, so it renders
+   on a real device). The overflow engine shows fewer rows here (less height) and adds "and N more". {% endcomment %}
+{% assign nowsec = 'now' | date: '%s' | plus: 0 %}
+<!-- I18N -->
+{% assign l_next_exam = "Next exam" %}{% assign l_next_assignment = "Next assignment" %}{% assign l_exams = "Exams" %}{% assign l_assignments = "Assignments" %}{% assign l_due = "Due" %}{% assign l_days = "Days" %}{% assign l_day = "Day" %}{% assign l_no_exam = "no exam" %}{% assign l_no_assignment = "no assignment" %}{% assign l_no_assignments = "no assignments" %}{% assign l_token_invalid = "Token invalid" %}{% assign l_token_hint = "restart ./setup.sh" %}
+<!-- /I18N -->
+{% assign rows = "" %}
+{% for c in courses %}{% for a in c.assignments %}{% if a.duedate > nowsec %}{% capture row %}{{ a.duedate }}|{{ a.name }}|{{ c.shortname }}{% endcapture %}{% assign rows = rows | append: row | append: "~~" %}{% endif %}{% endfor %}{% endfor %}
+{% assign rows = rows | split: "~~" | sort %}
+<div class="layout flex--col">
+  <span class="label label--underline pb--2">{{ l_due }}</span>
+  {% if errorcode or exception %}
+  <div class="item"><div class="content"><span class="title title--small">⚠ {{ l_token_invalid }}</span><span class="description">{{ l_token_hint }}</span></div></div>
+  {% elsif rows.size == 0 %}
+  <span class="description">{{ l_no_assignments }}</span>
+  {% else %}
+  <div class="columns">
+    <div class="column" data-overflow="true" data-overflow-counter="true">
+      {% for r in rows %}{% assign p = r | split: "|" %}{% if p.size >= 3 %}{% assign due = p[0] | plus: 0 %}
+      <div class="item">
+        <div class="content">
+          <span class="label label--small medium">{{ p[2] }}</span>
+          <span class="title title--small" data-clamp="1">{{ p[1] }}</span>
+          <span class="description">{{ due | date: '%a %d.%m %H:%M' }}</span>
+        </div>
+      </div>{% endif %}{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+<div class="title_bar"><span class="title">Moodle</span><span class="instance">{% if errorcode or exception %}⚠ {{ l_token_invalid }}{% else %}{{ 'now' | date: '%d.%m %H:%M' }}{% endif %}</span></div>

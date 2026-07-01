@@ -1,0 +1,67 @@
+---
+watch:
+  - .trmnlp.yml
+  - src
+
+framework_version: latest
+
+# board renders in Berlin time (affects {{ 'now' | date }} and the weekday guard)
+time_zone: Europe/Berlin
+
+# token for live polling — kept out of git. `export MOODLE_TOKEN=...` then `trmnlp serve`.
+custom_fields:
+  moodle_token: "{{ env.MOODLE_TOKEN }}"
+
+# Offline sample so `trmnlp serve` renders the real board (and shows off overflow /
+# "and N more" / clamping) without a token. Real courses; due dates are future-dated
+# samples — refresh them if they age past.
+#
+# NOTE: trmnlp deep-merges `variables` ON TOP of the poll response, so these values WIN
+# over live polling *locally*. That's why errorcode/exception are nulled here — an
+# empty-token poll returns "invalidtoken", which would otherwise force the error state.
+# On a real device .trmnlp.yml is ignored, so live polling drives the board.
+#
+# To preview with YOUR real Moodle data locally: comment out `courses:` (and the error
+# nulls) below, then `export MOODLE_TOKEN=<token> && trmnlp serve`.
+variables:
+  errorcode:
+  exception:
+  message:
+  courses:
+    - id: 1127
+      shortname: "Mathe 2"
+      fullname: "Mathematik 2 (SoSe 2026)"
+      assignments:
+        - {name: "Hausaufgabe Woche 11 mit sehr langem Titel der umbrechen muss", duedate: 1783053712}
+        - {name: "Bonusaufgabe Woche 11", duedate: 1783312912}
+        - {name: "Hausaufgabe Woche 12", duedate: 1783658512}
+        - {name: "Klausurvorbereitung Blatt A", duedate: 1783917712}
+    - id: 1107
+      shortname: "PT2-26"
+      fullname: "Einführung in die Programmiertechnik II"
+      assignments:
+        - {name: "Übung 4", duedate: 1783140112}
+        - {name: "Übung 5", duedate: 1783485712}
+        - {name: "Projektabgabe Milestone 2", duedate: 1783744912}
+    - id: 1136
+      shortname: "BIS2026"
+      fullname: "Building Interactive Systems 2026"
+      assignments:
+        - {name: "unity and level design", duedate: 1783226512}
+        - {name: "playtesting report", duedate: 1783572112}
+        - {name: "final build submission", duedate: 1784004112}
+    - id: 1081
+      shortname: "DBS I - 2026"
+      fullname: "Datenbanksysteme I - Sommersemester 2026"
+      assignments:
+        - {name: "SQL Übungsblatt 6", duedate: 1783399312}
+        - {name: "ER-Modellierung Abgabe", duedate: 1783831312}
+    - id: 1093
+      shortname: "Ethik"
+      fullname: "Informatik, Ethik und Gesellschaft SoSe26"
+      assignments:
+        - {name: "Essay Abgabe", duedate: 1784090512}
+    - id: 1091
+      shortname: "Recht"
+      fullname: "Recht für Ingenieure II SoSe26"
+      assignments: []

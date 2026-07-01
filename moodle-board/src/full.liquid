@@ -1,0 +1,133 @@
+{% comment %} Deadlines are live from the Moodle poll. Lecture/exam rows and the
+   course map between the markers below are written by ./setup.sh — edit there,
+   not by hand. 3 cols: next exam (hero) · all exams · assignments. {% endcomment %}
+{% assign nowsec = 'now' | date: '%s' | plus: 0 %}
+{% assign wd = 'now' | date: '%u' %}
+<!-- I18N -->
+{% assign l_next_exam = "Next exam" %}{% assign l_next_assignment = "Next assignment" %}{% assign l_exams = "Exams" %}{% assign l_assignments = "Assignments" %}{% assign l_due = "Due" %}{% assign l_days = "Days" %}{% assign l_day = "Day" %}{% assign l_no_exam = "no exam" %}{% assign l_no_assignment = "no assignment" %}{% assign l_no_assignments = "no assignments" %}{% assign l_token_invalid = "Token invalid" %}{% assign l_token_hint = "restart ./setup.sh" %}
+<!-- /I18N -->
+<!-- EXAMS -->
+      {% assign exams = "1783936800|BIS|13.07.,1785146400|DBS|27.07.,1786442400|Ethk|11.08.,1787047200|MA II|18.08." | split: "," %}
+<!-- /EXAMS -->
+{% comment %} find the single nearest future exam (hero) and count how many are still
+   ahead, so the exam column can size its numbers to always fit — no JS fit-value
+   engine (it aborts the overflow engine used by the Abgaben column). {% endcomment %}
+{% assign next_name = '' %}{% assign next_date = '' %}{% assign next_days = 0 %}{% assign exam_count = 0 %}
+{% for e in exams %}{% assign p = e | split: "|" %}{% if p.size >= 3 %}{% assign u = p[0] | plus: 0 %}{% if u > nowsec %}{% assign exam_count = exam_count | plus: 1 %}{% if next_name == '' %}{% assign next_name = p[1] %}{% assign next_date = p[2] %}{% assign next_days = u | minus: nowsec | divided_by: 86400 %}{% endif %}{% endif %}{% endif %}{% endfor %}
+{% comment %} pick the exam number size from the count (fewer = bigger, filling the column) {% endcomment %}
+{% comment %} sizes account for the 2-line label (bold course + Days·date) under each number {% endcomment %}{% if exam_count <= 1 %}{% assign exam_val = 'value--xxlarge' %}{% elsif exam_count <= 2 %}{% assign exam_val = 'value--xlarge' %}{% elsif exam_count <= 3 %}{% assign exam_val = 'value--large' %}{% elsif exam_count <= 5 %}{% assign exam_val = 'value--base' %}{% else %}{% assign exam_val = 'value--small' %}{% endif %}
+{% comment %} flatten every course's future assignments into sorted "duedate|name|label" rows.
+   Built here (NOT read from shared.liquid) so the hero and the Abgaben column share one source
+   and can't diverge on a real device, where shared.liquid is NOT prepended. The COURSEMAP region
+   (course id → short label) is written by ./setup.sh — keep it as the file's only COURSEMAP. {% endcomment %}
+{% assign rows = "" %}
+{% for c in courses %}{% assign clabel = c.shortname %}{% case c.id %}
+      <!-- COURSEMAP -->
+      {% when 1127 %}{% assign clabel = "MA II" %}
+      {% when 1107 %}{% assign clabel = "PT II" %}
+      {% when 1136 %}{% assign clabel = "BIS" %}
+      {% when 1081 %}{% assign clabel = "DBS" %}
+      {% when 1093 %}{% assign clabel = "Ethk" %}
+      {% when 1091 %}{% assign clabel = "recht" %}
+      <!-- /COURSEMAP -->
+      {% endcase %}{% for a in c.assignments %}{% if a.duedate > nowsec %}{% capture row %}{{ a.duedate }}|{{ a.name }}|{{ clabel }}{% endcapture %}{% assign rows = rows | append: row | append: "~~" %}{% endif %}{% endfor %}{% endfor %}
+{% comment %} 10-digit unix prefix ⇒ lexical sort == numeric == soonest first {% endcomment %}
+{% assign rows = rows | split: "~~" | sort %}
+{% comment %} nearest upcoming assignment (Übung) for the second hero — rows[0] is the soonest {% endcomment %}
+{% assign next_ueb_name = '' %}{% assign next_ueb_label = '' %}{% assign next_ueb_days = 0 %}
+{% if rows.size > 0 %}{% assign ap = rows[0] | split: "|" %}{% if ap.size >= 3 %}{% assign next_ueb_name = ap[1] %}{% assign next_ueb_label = ap[2] %}{% assign next_ueb_days = ap[0] | plus: 0 | minus: nowsec | divided_by: 86400 %}{% endif %}{% endif %}
+
+<div class="layout">
+  <div class="columns">
+
+    {% comment %} two equal heroes as normal items (meta left bar), split by a divider:
+       next exam on top, next assignment below. h--full so they fill the column height. {% endcomment %}
+    <div class="column self--stretch">
+      <div class="item grow basis--0">
+        <div class="meta"></div>
+        <div class="content flex flex--col flex--left">
+          {% if next_name != '' %}
+          {% assign kd = l_days %}{% if next_days == 1 %}{% assign kd = l_day %}{% endif %}
+          {% comment %} ponytail: inline align-items:baseline — no baseline flex utility exists; digits/caps have no descenders so baseline == visual bottom {% endcomment %}
+          <div class="flex flex--row gap--small" style="align-items:baseline">
+            <span class="value value--xxlarge value--tnums">{{ next_days }}</span>
+            <span class="value value--large">{{ next_name }}</span>
+          </div>
+          {% comment %} ponytail: inline line-height trims label--large's leading so the days line sits closer {% endcomment %}
+          {% comment %} ponytail: line-height trims leading; -margin-top closes the value's 6px bottom leading so the title sits tight under the number {% endcomment %}
+          <span class="label label--large" style="line-height:1.1;margin-top:-10px">{{ l_next_exam }}</span>
+          <span class="label label--small" data-clamp="1">{{ kd }} · {{ next_date }}</span>
+          {% else %}
+          <span class="value value--xxxlarge">–</span>
+          <span class="label">{{ l_no_exam }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="item grow basis--0">
+        <div class="meta"></div>
+        <div class="content flex flex--col flex--left">
+          {% if next_ueb_name != '' %}
+          {% assign ud = l_days %}{% if next_ueb_days == 1 %}{% assign ud = l_day %}{% endif %}
+          <div class="flex flex--row gap--small" style="align-items:baseline">
+            <span class="value value--xxlarge value--tnums">{{ next_ueb_days }}</span>
+            <span class="value value--large">{{ next_ueb_label }}</span>
+          </div>
+          <span class="label label--large" style="line-height:1.1;margin-top:-10px">{{ l_next_assignment }}</span>
+          <span class="label label--small" data-clamp="1">{{ ud }} · {{ next_ueb_name | truncate: 24 }}</span>
+          {% else %}
+          <span class="value value--xxxlarge">–</span>
+          <span class="label">{{ l_no_assignment }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <span class="label label--underline pb--2">{{ l_exams }}</span>
+      {% comment %} item grow makes the exams share the column height evenly; exam_val
+         (chosen above from the count) shrinks the number so they never overflow {% endcomment %}
+      {% for e in exams %}{% assign p = e | split: "|" %}{% if p.size >= 3 %}{% assign u = p[0] | plus: 0 %}{% if u > nowsec %}{% assign days = u | minus: nowsec | divided_by: 86400 %}{% assign ed = l_days %}{% if days == 1 %}{% assign ed = l_day %}{% endif %}
+        <div class="item grow">
+          <div class="meta"></div>
+          <div class="content">
+            <div class="flex flex--row gap--small" style="align-items:baseline">
+              <span class="value {{ exam_val }} value--tnums">{{ days }}</span>
+              <span class="value value--small">{{ p[1] }}</span>
+            </div>
+            <span class="label label--small">{{ ed }} · {{ p[2] }}</span>
+          </div>
+        </div>
+      {% endif %}{% endif %}{% endfor %}
+      {% if exam_count == 0 %}<span class="description">{{ l_no_exam }}</span>{% endif %}
+    </div>
+
+    <div class="column">
+      <span class="label label--underline pb--2">{{ l_assignments }}</span>
+      {% comment %} rows (sorted upcoming assignments) is built once at the top of this file.
+         Cap + "and N more" are computed HERE in Liquid, not by the JS overflow engine — the
+         engine doesn't reliably run on-device (rows then wrap 2 lines and clip past the title
+         bar). Same reason exam numbers are Liquid-sized. amax picked so rows never overflow. {% endcomment %}
+      {% assign total = 0 %}{% for r in rows %}{% assign cp = r | split: "|" %}{% if cp.size >= 3 %}{% assign total = total | plus: 1 %}{% endif %}{% endfor %}
+      {% assign amax = 5 %}{% assign shown = 0 %}
+      <div class="flex flex--col gap">
+      {% for r in rows %}{% assign p = r | split: "|" %}{% if p.size >= 3 %}{% if shown < amax %}{% assign adays = p[0] | plus: 0 | minus: nowsec | divided_by: 86400 %}{% assign ad = l_days %}{% if adays == 1 %}{% assign ad = l_day %}{% endif %}
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <div class="flex flex--row gap--small" style="align-items:baseline">
+              <span class="value value--base value--tnums">{{ adays }}</span>
+              <span class="value value--small">{{ p[2] }}</span>
+            </div>
+            <span class="label label--small">{{ ad }} · {{ p[1] | truncate: 26 }}</span>
+          </div>
+        </div>
+      {% assign shown = shown | plus: 1 %}{% endif %}{% endif %}{% endfor %}
+      </div>
+      {% assign more = total | minus: amax %}
+      {% if errorcode or exception %}<span class="value value--large">⚠</span><span class="label">{{ l_token_invalid }}</span><span class="label label--small">{{ l_token_hint }}</span>{% elsif shown == 0 %}<span class="description">{{ l_no_assignments }}</span>{% elsif more > 0 %}<span class="label label--small medium pt--2">and {{ more }} more</span>{% endif %}
+    </div>
+
+  </div>
+</div>
+<div class="title_bar"><span class="title">Moodle</span><span class="instance">{% if errorcode or exception %}⚠ {{ l_token_invalid }}{% else %}{{ 'now' | date: '%d.%m %H:%M' }}{% endif %}</span></div>

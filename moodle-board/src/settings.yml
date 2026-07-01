@@ -1,0 +1,15 @@
+---
+id: 019f0897-5374-76bd-946b-8cc19c8afbc9
+strategy: polling
+name: Moodle Board
+polling_verb: get
+polling_url: https://moodle.hpi.de/webservice/rest/server.php?wstoken={{ moodle_token }}&moodlewsrestformat=json&wsfunction=mod_assign_get_assignments&courseids[0]=1127&courseids[1]=1107&courseids[2]=1136&courseids[3]=1081&courseids[4]=1093&courseids[5]=1091
+polling_headers: ''
+no_screen_padding: 'no'
+dark_mode: 'no'
+refresh_interval: 60
+custom_fields:
+- keyname: moodle_token
+  field_type: string
+  name: Moodle Token
+  description: your Moodle wstoken — run ./setup.sh to get it
