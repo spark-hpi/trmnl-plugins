@@ -1,0 +1,21 @@
+<style>
+  .trmnl .screen { --gap: 0 !important; padding: 0 !important; }
+  .trmnl .view--full { width: var(--screen-w) !important; height: var(--screen-h) !important; }
+</style>
+
+<div class="citymap" style="position:absolute;inset:0;overflow:hidden;background:#ffffff;color:#000000;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+
+  <svg viewBox="0 0 800 430" preserveAspectRatio="xMidYMid slice" style="position:absolute;top:0;left:0;width:100%;height:calc(100% - 52px);display:block;background:#ffffff;" shape-rendering="geometricPrecision">
+    {% for b in buildings %}<polygon points="{{ b }}" fill="#c4c4c4" stroke="none"/>{% endfor %}
+    {% for p in paths %}<polyline points="{{ p }}" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>{% endfor %}
+  </svg>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;height:52px;box-sizing:border-box;border-top:3px solid #000000;background:#ffffff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;">
+    <div style="display:flex;align-items:baseline;gap:12px;min-width:0;">
+      <span style="font-size:31px;font-weight:800;letter-spacing:-0.6px;line-height:1;white-space:nowrap;">{{ city }}</span>
+      <span style="font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;white-space:nowrap;">{{ country }}</span>
+    </div>
+    {% if pop and pop != "" %}<div style="font-size:19px;font-weight:600;letter-spacing:0.2px;white-space:nowrap;">{{ pop }} people</div>{% endif %}
+  </div>
+
+</div>

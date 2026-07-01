@@ -1,0 +1,6 @@
+<div style="position:absolute;inset:0;width:400px;height:480px;overflow:hidden;background:#ffffff;color:#000000;font-family:'Inter',Arial,sans-serif;">
+  <svg width="400" height="480" viewBox="0 0 800 430" preserveAspectRatio="xMidYMid slice" style="position:absolute;top:0;left:0;">
+    {% for p in paths %}<polyline points="{{ p }}" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>{% endfor %}
+  </svg>
+  <div style="position:absolute;left:0;bottom:0;width:400px;box-sizing:border-box;padding:6px 14px;background:#ffffff;border-top:3px solid #000000;font-weight:800;font-size:24px;">{{ city }} <span style="font-size:14px;font-weight:700;letter-spacing:1.5px;">{{ country }}</span></div>
+</div>
