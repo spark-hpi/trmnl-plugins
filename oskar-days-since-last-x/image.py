@@ -6,7 +6,7 @@ number, code, optional 2FA password) and the session is persisted to disk, so
 subsequent starts are non-interactive.
 
 Endpoints:
-    GET /meme?days=X   -> {"url": "http://<host>/images/<file>.jpg"}
+    GET /meme?days=X   -> {"url": "http://<host>/images/<file>.jpg", "message": "..."}
     GET /images/<file> -> the cached image bytes
     GET /health        -> {"status": "ok"}
 
@@ -55,8 +55,8 @@ CACHE_TTL = int(os.environ.get("CACHE_TTL", "300"))
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL")
 
 # in-memory cache of computed results, keyed by the `days` value:
-#   days -> (computed_at_epoch, filename)
-_result_cache: dict[int, tuple[float, str]] = {}
+#   days -> (computed_at_epoch, filename, caption)
+_result_cache: dict[int, tuple[float, str, str]] = {}
 # serialises Telegram history scans so concurrent requests don't stampede.
 _scan_lock = asyncio.Lock()
 
@@ -101,20 +101,26 @@ async def _find_most_reacted(client: TelegramClient, days: int):
     return best_message, best_count
 
 
-async def _get_cached_filename(client: TelegramClient, days: int) -> str | None:
-    """Filename of the most-reacted image for `days`, downloading if needed."""
+async def _get_cached_result(
+    client: TelegramClient, days: int
+) -> tuple[str, str] | None:
+    """(filename, message) of the most-reacted image for `days`.
+
+    Downloads the image if it isn't cached on disk. Returns None if no image
+    was found in the window. `message` is the photo's caption ("" if none).
+    """
     now = time.time()
     cached = _result_cache.get(days)
     if cached and now - cached[0] < CACHE_TTL:
         # trust the cache only if the file is still on disk.
         if (IMAGE_DIR / cached[1]).exists():
-            return cached[1]
+            return cached[1], cached[2]
 
     async with _scan_lock:
         # re-check: another request may have populated it while we waited.
         cached = _result_cache.get(days)
         if cached and time.time() - cached[0] < CACHE_TTL and (IMAGE_DIR / cached[1]).exists():
-            return cached[1]
+            return cached[1], cached[2]
 
         message, _count = await _find_most_reacted(client, days)
         if message is None:
@@ -126,8 +132,9 @@ async def _get_cached_filename(client: TelegramClient, days: int) -> str | None:
         if not path.exists():
             await client.download_media(message, file=str(path))
 
-        _result_cache[days] = (time.time(), filename)
-        return filename
+        caption = message.message or ""
+        _result_cache[days] = (time.time(), filename, caption)
+        return filename, caption
 
 
 # --------------------------------------------------------------------------- #
@@ -147,21 +154,22 @@ async def handle_meme(request: web.Request) -> web.Response:
 
     client: TelegramClient = request.app["client"]
     try:
-        filename = await _get_cached_filename(client, days)
+        result = await _get_cached_result(client, days)
     except Exception as exc:  # surface Telegram errors as 502 rather than crash
         return web.json_response({"error": str(exc)}, status=502)
 
-    if filename is None:
+    if result is None:
         return web.json_response(
             {"error": f"no images found in the last {days} day(s)"}, status=404
         )
 
+    filename, message = result
     if PUBLIC_BASE_URL:
         url = f"{PUBLIC_BASE_URL.rstrip('/')}/images/{filename}"
     else:
         url = str(request.url.with_path(f"/images/{filename}").with_query(None))
 
-    return web.json_response({"url": url})
+    return web.json_response({"url": url, "message": message})
 
 
 async def handle_health(request: web.Request) -> web.Response:

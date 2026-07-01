@@ -42,9 +42,11 @@ def fetch_random(input):
 def fetch_meme(input):
     res = requests.get(MEME_ENDPOINT)
     res.raise_for_status()
+    data = res.json()
     return {
         "display_mode": "meme",
-        "meme_image_url": res.json()["url"],
+        "meme_image_url": data["url"],
+        "meme_message": data.get("message", ""),
     }
 
 

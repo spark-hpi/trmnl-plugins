@@ -1,6 +1,7 @@
 {% if mode == 'meme' %}
-<div class="layout layout--col layout--center layout--stretch">
+<div class="layout layout--col layout--center layout--stretch gap--small">
   <img class="image image-dither" src="{{ meme_image_url }}">
+  {% if meme_message != blank %}<span class="label label--xsmall text--center">{{ meme_message }}</span>{% endif %}
 </div>
 {% else %}
 <div class="layout layout--col layout--center gap">

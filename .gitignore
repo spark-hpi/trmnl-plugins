@@ -8,6 +8,7 @@ _build/
 # direnv
 .envrc
 .direnv
+.env
 
 # python
 __pycache__
