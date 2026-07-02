@@ -27,41 +27,5 @@ variables:
   errorcode:
   exception:
   message:
-  courses:
-    - id: 1127
-      shortname: "Mathe 2"
-      fullname: "Mathematik 2 (SoSe 2026)"
-      assignments:
-        - {name: "Hausaufgabe Woche 11 mit sehr langem Titel der umbrechen muss", duedate: 1783053712}
-        - {name: "Bonusaufgabe Woche 11", duedate: 1783312912}
-        - {name: "Hausaufgabe Woche 12", duedate: 1783658512}
-        - {name: "Klausurvorbereitung Blatt A", duedate: 1783917712}
-    - id: 1107
-      shortname: "PT2-26"
-      fullname: "Einführung in die Programmiertechnik II"
-      assignments:
-        - {name: "Übung 4", duedate: 1783140112}
-        - {name: "Übung 5", duedate: 1783485712}
-        - {name: "Projektabgabe Milestone 2", duedate: 1783744912}
-    - id: 1136
-      shortname: "BIS2026"
-      fullname: "Building Interactive Systems 2026"
-      assignments:
-        - {name: "unity and level design", duedate: 1783226512}
-        - {name: "playtesting report", duedate: 1783572112}
-        - {name: "final build submission", duedate: 1784004112}
-    - id: 1081
-      shortname: "DBS I - 2026"
-      fullname: "Datenbanksysteme I - Sommersemester 2026"
-      assignments:
-        - {name: "SQL Übungsblatt 6", duedate: 1783399312}
-        - {name: "ER-Modellierung Abgabe", duedate: 1783831312}
-    - id: 1093
-      shortname: "Ethik"
-      fullname: "Informatik, Ethik und Gesellschaft SoSe26"
-      assignments:
-        - {name: "Essay Abgabe", duedate: 1784090512}
-    - id: 1091
-      shortname: "Recht"
-      fullname: "Recht für Ingenieure II SoSe26"
-      assignments: []
+  # real poll response from payload.json (2026-07-02) — was the hand-written sample
+  courses: [{"id": 1127, "shortname": "Mathe 2", "fullname": "Mathematik 2 (SoSe 2026)", "assignments": [{"name": "Hausaufgabe Woche 2", "duedate": 1777240740}, {"name": "Bonusaufgabe Woche 3", "duedate": 1778450340}, {"name": "Hausaufgabe Woche 3", "duedate": 1777845540}, {"name": "Hausaufgabe Woche 4", "duedate": 1778450340}, {"name": "Hausaufgabe Woche 5", "duedate": 1779055140}, {"name": "Bonusaufgabe Woche 5", "duedate": 1779659940}, {"name": "Hausaufgabe Woche 6", "duedate": 1779659940}, {"name": "Hausaufgabe Woche 7", "duedate": 1780264740}, {"name": "Bonusaufgabe Woche 7", "duedate": 1780869540}, {"name": "Hausaufgabe Woche 8", "duedate": 1780869540}, {"name": "Hausaufgabe Woche 9", "duedate": 1781474340}, {"name": "Hausaufgabe Woche 10", "duedate": 1782079140}, {"name": "Hausaufgabe Woche 11", "duedate": 1782683940}, {"name": "Bonusaufgabe Woche 11", "duedate": 1783288740}, {"name": "Hausaufgabe Woche 12", "duedate": 1783288740}]}, {"id": 1107, "shortname": "PT2-26", "fullname": "Einführung in die Programmiertechnik II", "assignments": [{"name": "Übung 1", "duedate": 1777870800}, {"name": "Übung 3", "duedate": 1780894800}, {"name": "Übung 4", "duedate": 1782709200}, {"name": "Übung 2", "duedate": 1779080400}]}, {"id": 1136, "shortname": "BIS2026", "fullname": "Building Interactive Systems 2026", "assignments": [{"name": "assignment: encoder + motor excercise", "duedate": 1777672740}, {"name": "assignment: implementing PI control in Hapkit", "duedate": 1778277540}, {"name": "assignment: assemble dualpanto", "duedate": 1779487140}, {"name": "assignment 1: upload file for your own pcb", "duedate": 1780315200}, {"name": "write code of god object and kinematics for dualpanto, and upload the firmware using dualpanto-testing", "duedate": 1781301540}, {"name": "implement the missing parts in communication layer of PantoPlot and prepare repo", "duedate": 1781906340}, {"name": "unity and level design", "duedate": 1782511140}, {"name": "assignment 2: implement the core functionality on DaulPanto (due Friday)", "duedate": 1783202340}, {"name": "assignment: pick projects and upload scripts for your designs", "duedate": 1778882340}, {"name": "assignment 2: design level 1, 2, and 3 of a drawing app", "duedate": 1780696740}, {"name": "assignment 1: improve on your level designs (due Wednesday 19:00)", "duedate": 1782925200}]}, {"id": 1081, "shortname": "DBS I - 2026", "fullname": "Datenbanksysteme I - Sommersemester 2026", "assignments": [{"name": "Abgabe Aufgabenblatt 1", "duedate": 1778450340}, {"name": "Abgabe Aufgabenblatt 2", "duedate": 1780264740}, {"name": "Abgabe Aufgabenblatt 3", "duedate": 1782079140}, {"name": "Abgabe Aufgabenblatt 4", "duedate": 1783288740}]}, {"id": 1093, "shortname": "Informatik, Ethik und Gesellschaft SoSe26", "fullname": "Informatik, Ethik und Gesellschaft SoSe26", "assignments": []}, {"id": 1091, "shortname": "Recht für Ingenieure II SoSe26", "fullname": "Recht für Ingenieure II SoSe26", "assignments": []}]

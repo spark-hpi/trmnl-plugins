@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Setup for the Moodle TRMNL board (trmnlp project). Bash + coreutils + optional `dialog`.
 # Token -> pick courses (checklist) -> per course: label + exam day (calendar).
-# Writes src/settings.yml (poll URL) and src/full.liquid (labels + exams).
+# Writes src/settings.yml (poll URL) and the I18N/EXAMS/COURSEMAP regions of all four views.
 # Stateful: re-running shows a menu (or use a flag) once it's been set up before.
 #
 #   ./setup.sh             interactive (menu if already configured)
@@ -148,7 +148,9 @@ write_exams() {
   else
     printf '      {%% assign exams = "" | split: "," %%}\n' > "$f"
   fi
-  splice src/full.liquid '<!-- EXAMS -->' '<!-- /EXAMS -->' "$f"; rm -f "$f"
+  local v; for v in full half_horizontal half_vertical quadrant; do
+    splice "src/$v.liquid" '<!-- EXAMS -->' '<!-- /EXAMS -->' "$f"
+  done; rm -f "$f"
 }
 
 # ---- language: set LANGCODE to en|de (default English) -----------------------
@@ -192,7 +194,7 @@ update_exams() {
   EXAMRAW=$(mktemp)
   for lbl in "${labels[@]}"; do echo "  · $lbl"; exam_pick "$lbl"; done
   write_exams; rm -f "$EXAMRAW" ${DLGOUT:+"$DLGOUT"}
-  echo; echo "✓ exam dates updated in src/full.liquid. Re-deploy / refresh to see them."
+  echo; echo "✓ exam dates updated in all four views. Re-deploy / refresh to see them."
 }
 
 # already configured if full.liquid has at least one baked course mapping
@@ -295,14 +297,16 @@ custom_fields:
   description: your Moodle wstoken — run ./setup.sh to get it
 EOF
 
-splice src/full.liquid '<!-- COURSEMAP -->' '<!-- /COURSEMAP -->' "$MAPFILE"
+for v in full half_horizontal half_vertical quadrant; do
+  splice "src/$v.liquid" '<!-- COURSEMAP -->' '<!-- /COURSEMAP -->' "$MAPFILE"
+done
 write_exams
 pick_lang; write_i18n   # board language (defaults to English)
 rm -f "$MAPFILE" "$EXAMRAW" ${DLGOUT:+"$DLGOUT"}
 
 cat <<EOF
 
-✓ src/settings.yml ($idx course(s)) + src/full.liquid (labels + exams) written.
+✓ src/settings.yml ($idx course(s)) + all four views (labels + exams) written.
 
 PREVIEW:   export MOODLE_TOKEN=$TOKEN && trmnlp serve     # http://localhost:4567
 ON DEVICE: import the plugin into byos_laravel, paste the token into "Moodle Token".
