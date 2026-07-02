@@ -12,4 +12,4 @@ custom_fields:
 - keyname: moodle_token
   field_type: string
   name: Moodle Token
-  description: your Moodle wstoken — run ./setup.sh to get it
+  description: your Moodle wstoken, run ./setup.sh to get it

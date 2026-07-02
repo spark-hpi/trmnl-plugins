@@ -1,32 +1,84 @@
-{% comment %} compact upcoming deadlines · single column (400x240, tightest view). Same self-
-   contained list as half_vertical (built inline from `courses`, not shared.liquid, so it renders
-   on a real device). The overflow engine shows fewer rows here (less height) and adds "and N more". {% endcomment %}
+{% comment %} hero-only view (400x240, tightest): just the two numbers that matter — days to
+   next exam, days to next assignment — side by side. The lists live in the bigger views.
+   Self-contained (built from `courses`, not shared.liquid, so it renders on a real device).
+   I18N / EXAMS / COURSEMAP regions are written by ./setup.sh — edit there, not by hand. {% endcomment %}
 {% assign nowsec = 'now' | date: '%s' | plus: 0 %}
 <!-- I18N -->
 {% assign l_next_exam = "Next exam" %}{% assign l_next_assignment = "Next assignment" %}{% assign l_exams = "Exams" %}{% assign l_assignments = "Assignments" %}{% assign l_due = "Due" %}{% assign l_days = "Days" %}{% assign l_day = "Day" %}{% assign l_no_exam = "no exam" %}{% assign l_no_assignment = "no assignment" %}{% assign l_no_assignments = "no assignments" %}{% assign l_token_invalid = "Token invalid" %}{% assign l_token_hint = "restart ./setup.sh" %}
 <!-- /I18N -->
+<!-- EXAMS -->
+      {% assign exams = "1781517600|recht|15.06.,1783936800|BIS|13.07.,1785146400|DBS|27.07.,1785837600|PT II|04.08.,1786442400|Ethik|11.08.,1787047200|MA II|18.08." | split: "," %}
+<!-- /EXAMS -->
+{% comment %} nearest future exam — same nested-if pattern as full.liquid (no `and` chains;
+   PHP Liquid on device evaluates them differently than Ruby trmnlp) {% endcomment %}
+{% assign next_name = '' %}{% assign next_date = '' %}{% assign next_days = 0 %}
+{% for e in exams %}{% assign p = e | split: "|" %}{% if p.size >= 3 %}{% assign u = p[0] | plus: 0 %}{% if u > nowsec %}{% if next_name == '' %}{% assign next_name = p[1] %}{% assign next_date = p[2] %}{% assign next_days = u | minus: nowsec | divided_by: 86400 %}{% endif %}{% endif %}{% endif %}{% endfor %}
 {% assign rows = "" %}
-{% for c in courses %}{% for a in c.assignments %}{% if a.duedate > nowsec %}{% capture row %}{{ a.duedate }}|{{ a.name }}|{{ c.shortname }}{% endcapture %}{% assign rows = rows | append: row | append: "~~" %}{% endif %}{% endfor %}{% endfor %}
+{% for c in courses %}{% assign clabel = c.shortname %}{% case c.id %}
+      <!-- COURSEMAP -->
+      {% when 1127 %}{% assign clabel = "MA II" %}
+      {% when 1107 %}{% assign clabel = "PT II" %}
+      {% when 1136 %}{% assign clabel = "BIS" %}
+      {% when 1081 %}{% assign clabel = "DBS" %}
+      {% when 1093 %}{% assign clabel = "Ethik" %}
+      {% when 1091 %}{% assign clabel = "Recht" %}
+      <!-- /COURSEMAP -->
+      {% endcase %}{% for a in c.assignments %}{% if a.duedate > nowsec %}{% capture row %}{{ a.duedate }}|{{ a.name }}|{{ clabel }}{% endcapture %}{% assign rows = rows | append: row | append: "~~" %}{% endif %}{% endfor %}{% endfor %}
+{% comment %} 10-digit unix prefix ⇒ lexical sort == soonest first. FIRST valid row = hero
+   (not rows[0] — PHP Liquid keeps the trailing "" that split leaves) {% endcomment %}
 {% assign rows = rows | split: "~~" | sort %}
-<div class="layout flex--col">
-  <span class="label label--underline pb--2">{{ l_due }}</span>
-  {% if errorcode or exception %}
+{% assign next_ueb_name = '' %}{% assign next_ueb_label = '' %}{% assign next_ueb_days = 0 %}{% assign ueb_found = false %}
+{% for r in rows %}{% unless ueb_found %}{% assign ap = r | split: "|" %}{% if ap.size >= 3 %}{% assign next_ueb_name = ap[1] %}{% assign next_ueb_label = ap[2] %}{% assign next_ueb_days = ap[0] | plus: 0 | minus: nowsec | divided_by: 86400 %}{% assign ueb_found = true %}{% endif %}{% endunless %}{% endfor %}
+<div class="layout">
+{% if errorcode or exception %}
   <div class="item"><div class="content"><span class="title title--small">⚠ {{ l_token_invalid }}</span><span class="description">{{ l_token_hint }}</span></div></div>
-  {% elsif rows.size == 0 %}
-  <span class="description">{{ l_no_assignments }}</span>
-  {% else %}
-  <div class="columns">
-    <div class="column" data-overflow="true" data-overflow-counter="true">
-      {% for r in rows %}{% assign p = r | split: "|" %}{% if p.size >= 3 %}{% assign due = p[0] | plus: 0 %}
-      <div class="item">
-        <div class="content">
-          <span class="label label--small medium">{{ p[2] }}</span>
-          <span class="title title--small" data-clamp="1">{{ p[1] }}</span>
-          <span class="description">{{ due | date: '%a %d.%m %H:%M' }}</span>
+{% else %}
+  <div class="columns self--stretch">
+    <div class="column self--stretch">
+      <div class="item grow">
+        <div class="meta"></div>
+        <div class="content flex flex--col flex--left gap--none">
+          {% if next_name != '' %}
+          {% assign kd = l_days %}{% if next_days == 1 %}{% assign kd = l_day %}{% endif %}
+          <span class="label label--small">{{ l_next_exam }}</span>
+          <div class="flex flex--row gap--small" style="align-items:baseline">
+            <span class="value value--xlarge value--tnums">{{ next_days }}</span>
+            <span class="label label--small">{{ kd }}</span>
+          </div>
+          <div class="flex flex--row gap--xsmall" style="align-items:baseline">
+            <span class="label font--bold">{{ next_name }}</span>
+            <span class="label label--small">· {{ next_date }}</span>
+          </div>
+          {% else %}
+          <span class="value value--xlarge">–</span>
+          <span class="label label--small">{{ l_no_exam }}</span>
+          {% endif %}
         </div>
-      </div>{% endif %}{% endfor %}
+      </div>
+    </div>
+    <div class="column self--stretch">
+      <div class="item grow">
+        <div class="meta"></div>
+        <div class="content flex flex--col flex--left gap--none">
+          {% if ueb_found %}
+          {% assign ud = l_days %}{% if next_ueb_days == 1 %}{% assign ud = l_day %}{% endif %}
+          <span class="label label--small">{{ l_next_assignment }}</span>
+          <div class="flex flex--row gap--small" style="align-items:baseline">
+            <span class="value value--xlarge value--tnums">{{ next_ueb_days }}</span>
+            <span class="label label--small">{{ ud }}</span>
+          </div>
+          <div class="flex flex--row gap--xsmall" style="align-items:baseline">
+            <span class="label font--bold">{{ next_ueb_label }}</span>
+            <span class="label label--small" data-clamp="1">· {{ next_ueb_name | truncate: 14 }}</span>
+          </div>
+          {% else %}
+          <span class="value value--xlarge">–</span>
+          <span class="label label--small">{{ l_no_assignment }}</span>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
-  {% endif %}
+{% endif %}
 </div>
 <div class="title_bar"><span class="title">Moodle</span><span class="instance">{% if errorcode or exception %}⚠ {{ l_token_invalid }}{% else %}{{ 'now' | date: '%d.%m %H:%M' }}{% endif %}</span></div>
