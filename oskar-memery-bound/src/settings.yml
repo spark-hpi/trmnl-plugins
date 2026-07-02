@@ -1,0 +1,24 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.trmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+id: b407670a-ddee-4b08-9b8c-369ea9048c74
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: latest
+polling_url: 'https://meme.hpi.church/meme?days={{ days }}'
+polling_headers: ''
+name: Memery Bound
+refresh_interval: 1440
+custom_fields:
+  - keyname: days
+    field_type: number
+    name: Lookback Window (days)
+    description: How many days back to search for the most-reacted image
+    default: 7
+    optional: true

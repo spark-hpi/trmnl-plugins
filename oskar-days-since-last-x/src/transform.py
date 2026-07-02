@@ -32,43 +32,19 @@ def fetch_rust_mc_server(input):
 
 COUNTERS = {"student_telegram": fetch_student_telegram, "rust_mc_server": fetch_rust_mc_server}
 
-MEME_ENDPOINT = "https://meme.hpi.church/meme?days=7"
-
 
 def fetch_random(input):
     return COUNTERS[random.choice(list(COUNTERS.keys()))](input)
 
 
-def fetch_meme(input):
-    res = requests.get(MEME_ENDPOINT)
-    res.raise_for_status()
-    data = res.json()
-    return {
-        "display_mode": "meme",
-        "meme_image_url": data["url"],
-        "meme_message": data.get("message", ""),
-    }
-
-
 def run(input):
     args = (input or {}).get("args", {})
-    mode = args.get("mode", "days_since")
-
-    if mode == "meme":
-        try:
-            return fetch_meme(input)
-        except Exception as e:
-            return {"display_mode": "meme", "meme_image_url": "", "error": str(e)}
-
     counter_type = args.get("counter", "random")
     fetcher = COUNTERS.get(counter_type) or fetch_random
     try:
-        result = fetcher(input)
-        result["display_mode"] = "days_since"
-        return result
+        return fetcher(input)
     except Exception as e:
         return {
-            "display_mode": "days_since",
             "days": "?",
             "counter_label": "Error fetching counter",
             "counter_type": counter_type,

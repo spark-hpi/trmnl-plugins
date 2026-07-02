@@ -1,18 +1,11 @@
-{% if mode == 'meme' %}
-<div class="layout layout--col layout--center gap--small">
-  <img class="image image-dither image--contain grow" src="{{ meme_image_url }}">
-  {% if meme_message != blank %}<span class="label label--small text--center no-shrink">{{ meme_message }}</span>{% endif %}
-</div>
-{% else %}
 <div class="layout layout--col layout--center gap">
   <span class="label label--medium">It has been</span>
   <span class="value value--giga" data-fit-value="true">{{ display_days }}</span>
   <span class="label label--medium">days since {{ display_label }}</span>
 </div>
-{% endif %}
 
 <div class="title_bar">
   {{ title_bar_icon }}
   <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
-  <span class="instance">{% if mode == 'meme' %}Meme of the Week{% else %}Days Since Last X{% endif %}</span>
+  <span class="instance">Days Since Last X</span>
 </div>

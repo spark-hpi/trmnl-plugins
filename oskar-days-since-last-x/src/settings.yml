@@ -12,26 +12,11 @@ static_data: ''
 polling_verb: get
 framework_version: latest
 serverless_language: python
-polling_url: 'https://httpbin.org/get?mode={{ display_mode }}&counter={{ counter_type }}'
+polling_url: 'https://httpbin.org/get?counter={{ counter_type }}'
 polling_headers: ''
 name: Days Since Last X
 refresh_interval: 1440
 custom_fields:
-  - keyname: display_mode
-    field_type: select
-    name: Display Mode
-    options:
-      - days_since
-      - meme
-    default: days_since
-    conditional_validation:
-      - when: "days_since"
-        required:
-          - counter_type
-      - when: "meme"
-        hidden:
-          - counter_type
-
   - keyname: counter_type
     field_type: select
     name: Counter Type
