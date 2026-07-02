@@ -1,0 +1,20 @@
+{% if message != blank %}
+<div class="grid grid--cols-12 gap h--full">
+  <div class="col--span-8 layout layout--center h--full p--4">
+    <img class="image image-dither image--contain w--full h--full" src="{{ url }}">
+  </div>
+  <div class="col--span-4 layout layout--col layout--center h--full">
+    <span class="label label--medium text--center">{{ message }}</span>
+  </div>
+</div>
+{% else %}
+<div class="layout layout--col layout--center h--full p--4">
+  <img class="image image-dither image--contain w--full h--full" src="{{ url }}">
+</div>
+{% endif %}
+
+<div class="title_bar">
+  {{ title_bar_icon }}
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+  <span class="instance">Meme of the Week</span>
+</div>

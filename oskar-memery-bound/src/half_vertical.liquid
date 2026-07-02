@@ -1,0 +1,10 @@
+<div class="layout layout--col layout--center gap--small p--4">
+  <img class="image image-dither image--contain grow" src="{{ url }}">
+  {% if message != blank %}<span class="label label--small text--center no-shrink">{{ message }}</span>{% endif %}
+</div>
+
+<div class="title_bar">
+  {{ title_bar_icon }}
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+  <span class="instance">Meme of the Week</span>
+</div>
