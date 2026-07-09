@@ -1,0 +1,28 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.trmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+id: 019f1edd-dd8b-76a8-918d-9940e0ac8324
+strategy: static
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: |
+  {
+    "plants": [
+      {"id": 1, "name": "Cloud Plant", "type": "cloud", "days": 12, "size": "large"},
+      {"id": 2, "name": "Jade Plant", "type": "hanging", "days": 8, "size": "medium"},
+      {"id": 3, "name": "String Succulent", "type": "succulent", "days": 21, "size": "small"},
+      {"id": 4, "name": "Trailing Ivy", "type": "hanging", "days": 14, "size": "medium"},
+      {"id": 5, "name": "Desert Rose", "type": "succulent", "days": 18, "size": "large"},
+      {"id": 6, "name": "Palm Tree", "type": "palm", "days": 10, "size": "large"},
+      {"id": 7, "name": "Rosemary", "type": "rosemary", "days": 7, "size": "medium"}
+    ]
+  }
+polling_verb: get
+framework_version: latest
+name: "Paper Plants"
+refresh_interval: 1440
+
+serverless_language: python

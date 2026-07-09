@@ -1,0 +1,17 @@
+<div class="layout">
+  <div class="flex flex--col gap--medium">
+    {% for plant in plants | slice: 0, 3 %}
+    <div class="flex flex--row gap--medium flex--left flex--center-y">
+      <div style="flex-shrink: 0;">{% if plant.type == 'cloud' %}{{ cloud_plant }}{% elsif plant.type == 'hanging' %}{{ hanging_plant }}{% elsif plant.type == 'palm' %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="60" height="60"><path d="M 50 70 L 40 130 Q 38 140 44 144 L 56 144 Q 62 140 60 130 L 50 70" stroke="black" stroke-width="1.5" fill="none"/><path d="M 20 50 Q 10 20 24 10 Q 30 16 32 40" stroke="black" stroke-width="1.2" fill="none"/><path d="M 50 40 Q 40 10 50 4 Q 60 10 60 40" stroke="black" stroke-width="1.2" fill="none"/><path d="M 80 50 Q 90 20 76 10 Q 70 16 68 40" stroke="black" stroke-width="1.2" fill="none"/><path d="M 30 56 Q 16 30 20 16" stroke="black" stroke-width="1.2" fill="none"/><path d="M 70 56 Q 84 30 80 16" stroke="black" stroke-width="1.2" fill="none"/></svg>{% elsif plant.type == 'rosemary' %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="60" height="60"><path d="M 50 90 L 44 144 Q 42 150 48 152 L 52 152 Q 58 150 56 144 L 50 90" stroke="black" stroke-width="1.2" fill="none"/><circle cx="44" cy="80" r="3.5" fill="black"/><circle cx="56" cy="80" r="3.5" fill="black"/><circle cx="40" cy="70" r="3.5" fill="black"/><circle cx="60" cy="70" r="3.5" fill="black"/><circle cx="38" cy="56" r="3.5" fill="black"/><circle cx="62" cy="56" r="3.5" fill="black"/><circle cx="40" cy="40" r="3.5" fill="black"/><circle cx="60" cy="40" r="3.5" fill="black"/><circle cx="44" cy="24" r="3.5" fill="black"/><circle cx="56" cy="24" r="3.5" fill="black"/><circle cx="50" cy="12" r="4" fill="black"/></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="55" height="55"><path d="M 50 60 L 45 85 Q 44 90 47 92 L 53 92 Q 56 90 55 85 L 50 60" stroke="black" stroke-width="1.4" fill="none"/><rect x="42" y="80" width="16" height="8" stroke="black" stroke-width="1.4" fill="none"/><ellipse cx="35" cy="55" rx="8" ry="6" fill="black" transform="rotate(-30 35 55)" opacity="0.9"/><ellipse cx="65" cy="55" rx="8" ry="6" fill="black" transform="rotate(30 65 55)" opacity="0.9"/><ellipse cx="50" cy="30" rx="6" ry="10" fill="black" opacity="0.9"/><ellipse cx="40" cy="35" rx="5" ry="6" fill="black" transform="rotate(-20 40 35)" opacity="0.8"/><ellipse cx="60" cy="35" rx="5" ry="6" fill="black" transform="rotate(20 60 35)" opacity="0.8"/></svg>{% endif %}</div>
+      <div class="flex flex--col gap--xsmall">
+        <span class="label label--medium">{{ plant.name }}</span>
+        <span class="label label--base label--gray">{{ plant.days }}d</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="title_bar">
+  <span class="title">Plants</span>
+</div>
