@@ -1,0 +1,18 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.trmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+id: 019f23aa-0c13-772b-9d80-b089f0ecd4f5
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: latest
+polling_url: 'https://imensa.com'
+polling_headers: ''
+serverless_language: python
+name: Mensa Menu
+refresh_interval: 1440
