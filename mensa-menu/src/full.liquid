@@ -1,0 +1,44 @@
+{% comment %} Mensa Griebnitzsee – einfaches, eigenstaendiges Layout (kein TRMNL-Framework) {% endcomment %}
+<div style="font-family: Arial, Helvetica, sans-serif; color:#000; padding:12px;">
+
+  {% comment %} Kopfzeile {% endcomment %}
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;
+              border-bottom:3px solid #000; padding-bottom:6px; margin-bottom:12px;">
+    <span style="font-size:20px; font-weight:bold;">Mensa {{ mensa_name }}</span>
+    <span style="font-size:14px; font-weight:bold;">KW {{ week }}</span>
+  </div>
+
+  {% comment %} Tage in zwei Spalten, ein Tag wird nie umgebrochen {% endcomment %}
+  <div style="column-count:2; column-gap:10px;">
+    {% for day in days %}
+    <div style="break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:12px;">
+
+      <div style="background:#000; color:#fff; font-weight:bold; font-size:14px;
+                  padding:3px 8px; border-radius:3px;">{{ day.label }}</div>
+
+      <div style="padding:5px 2px 0 2px;">
+        {% if day.meals.size > 0 %}
+          {% for meal in day.meals %}
+          <div style="margin-bottom:7px;">
+            <span style="display:inline-block; font-size:11px; font-weight:bold;
+                         text-transform:uppercase; letter-spacing:.4px;
+                         border:1px solid #000; border-radius:3px; padding:0 4px;">{{ meal.category }}</span>
+            <span style="font-size:13px;">{{ meal.description }}</span>
+            {% if meal.prices.student != blank %}
+              <span style="font-size:11px;">Preis: {{ meal.prices.student | money }}€</span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% else %}
+          <div style="font-size:12px; font-style:italic;">Kein Angebot</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% comment %} Legende {% endcomment %}
+  {% comment %}<div style="font-size:11px; margin-top:4px; padding-top:4px; border-top:1px solid #000;">
+    Preise: Studierende / Mitarbeitende / Gäste
+  </div>{% endcomment %}
+</div>

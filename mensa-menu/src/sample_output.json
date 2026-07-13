@@ -1,0 +1,387 @@
+{
+    "mensa": "Mensa Griebnitzsee",
+    "location": "Potsdam",
+    "week": "2026-W27",
+    "scraped_at": "2026-07-02T09:21:50",
+    "days": {
+        "montag": {
+            "label": "Montag",
+            "meals": [
+                {
+                    "category": "Angebot 1",
+                    "description": "Zero Waste-Dreierlei von der Karotte mit Dinkelpasta, Pesto und Leinsamen",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 3",
+                    "description": "Bulgur-Gemüse-Pfanne mit Hirtenkäse und Rucola",
+                    "prices": {
+                        "student": 3.6,
+                        "employee": 6.15,
+                        "guest": 7.15
+                    }
+                },
+                {
+                    "category": "Angebot 4",
+                    "description": "Hähnchen Cordon Bleu mit Rahmsauce und Erbsen, dazu Kroketten",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Snack",
+                    "description": "Pinsa Tomate-Mozzarella",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Dessert 1",
+                    "description": "Schokopudding mit Dessertsauce",
+                    "prices": {
+                        "student": 1.0,
+                        "employee": 1.5,
+                        "guest": 1.5
+                    }
+                },
+                {
+                    "category": "Dessert 2",
+                    "description": "Buttermilchdessert Mango mit Himbeerpüree",
+                    "prices": {
+                        "student": 1.5,
+                        "employee": 2.0,
+                        "guest": 2.0
+                    }
+                }
+            ]
+        },
+        "dienstag": {
+            "label": "Dienstag",
+            "meals": [
+                {
+                    "category": "Angebot 1",
+                    "description": "Kartoffelsuppe mit Wurzelgemüse und frischer Petersilie, dazu Vollkornbrot",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 3",
+                    "description": "No Chicken Frikassee mit Champignons, Spargel und Bärlauch, dazu Langkornreis",
+                    "prices": {
+                        "student": 3.6,
+                        "employee": 6.15,
+                        "guest": 7.15
+                    }
+                },
+                {
+                    "category": "Angebot 4",
+                    "description": "Pulled Pork mit pikantem Mais, Cole Slaw und Ciabatta",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Snack",
+                    "description": "Pinsa Tomate-Mozzarella",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Dessert 1",
+                    "description": "Haferdessert mit Erdbeerpüree",
+                    "prices": {
+                        "student": 1.0,
+                        "employee": 1.5,
+                        "guest": 1.5
+                    }
+                },
+                {
+                    "category": "Dessert 2",
+                    "description": "Schokoladenmousse",
+                    "prices": {
+                        "student": 1.5,
+                        "employee": 2.0,
+                        "guest": 2.0
+                    }
+                },
+                {
+                    "category": "Angebot des Tages - Nur solange der Vorrat reicht",
+                    "description": "Brew Bites Madras Art mit Sojasprossen, Möhren, Kokosmilch und Cashewkernen, dazu Basmatireis",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                }
+            ]
+        },
+        "mittwoch": {
+            "label": "Mittwoch",
+            "meals": [
+                {
+                    "category": "Angebot 1",
+                    "description": "Kuschari-Kichererbsen, Linsen und Nudelreis mit Tomatensauce und Röstzwiebeln",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 2",
+                    "description": "Kräuterrührei mit Rahmspinat und Salzkartoffeln",
+                    "prices": {
+                        "student": 2.95,
+                        "employee": 5.5,
+                        "guest": 6.5
+                    }
+                },
+                {
+                    "category": "Angebot 3",
+                    "description": "Mediterrane Tortelloni mit Tomaten-Oliven-Sugo und Babyspinat",
+                    "prices": {
+                        "student": 3.6,
+                        "employee": 6.15,
+                        "guest": 7.15
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Nur solange der Vorrat reicht",
+                    "description": "Brew Bites Madras Art mit Sojasprossen, Möhren, Kokosmilch und Cashewkernen, dazu Basmatireis",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Snack",
+                    "description": "Pulled BBQ Wrap-mit Jalapenos, roten Zwiebeln, Tomaten und Rotkrautsalat",
+                    "prices": {
+                        "student": 3.6,
+                        "employee": 6.15,
+                        "guest": 7.15
+                    }
+                },
+                {
+                    "category": "Dessert 1",
+                    "description": "Chiasamenpudding mit roter Grütze",
+                    "prices": {
+                        "student": 1.0,
+                        "employee": 1.5,
+                        "guest": 1.5
+                    }
+                },
+                {
+                    "category": "Dessert 2",
+                    "description": "Vegane Panna Cotta mit Himbeerpüree",
+                    "prices": {
+                        "student": 1.5,
+                        "employee": 2.0,
+                        "guest": 2.0
+                    }
+                },
+                {
+                    "category": "Angebot des Tages - Nur solange der Vorrat reicht",
+                    "description": "Kräuterquark mit Lausitzer Leinöl, Salzkartoffeln und mariniertem Blattsalat",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                }
+            ]
+        },
+        "donnerstag": {
+            "label": "Donnerstag",
+            "meals": [
+                {
+                    "category": "Angebot 1",
+                    "description": "Penne mit getrockneten Tomaten, Blattspinat, Tomaten-Mascarponesauce und gerösteten Sonnenblumenkernen",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 2",
+                    "description": "Chili sin Carne mit Sonnenblumenhack und Langkornreis, dazu bunter Salat",
+                    "prices": {
+                        "student": 2.95,
+                        "employee": 5.5,
+                        "guest": 6.5
+                    }
+                },
+                {
+                    "category": "Angebot 4",
+                    "description": "Planted Chick'n Burger im Sesambun mit Gewürzgurke, Tomaten, roten Zwiebeln und Pommes, dazu cole slaw salat",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Nur solange der Vorrat reicht",
+                    "description": "Kräuterquark mit Lausitzer Leinöl, Salzkartoffeln und mariniertem Blattsalat",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Snack",
+                    "description": "Quarkbällchen mit Toppings",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Dessert 1",
+                    "description": "Veganer Grießbrei mit Kirschgrütze",
+                    "prices": {
+                        "student": 1.0,
+                        "employee": 1.5,
+                        "guest": 1.5
+                    }
+                },
+                {
+                    "category": "Dessert 2",
+                    "description": "Vanillepudding mit Himbeerpüree",
+                    "prices": {
+                        "student": 1.5,
+                        "employee": 2.0,
+                        "guest": 2.0
+                    }
+                },
+                {
+                    "category": "Angebot des Tages - Nur solange der Vorrat reicht",
+                    "description": "Planted Bratwurst im Brötchen",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 3",
+                    "description": "Mediterrane Tortelloni mit Tomaten-Oliven-Sugo und Babyspinat",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                }
+            ]
+        },
+        "freitag": {
+            "label": "Freitag",
+            "meals": [
+                {
+                    "category": "Angebot 1",
+                    "description": "Mienudeln mit geschmortem Spitzkohl, Sojasprossen und Chilisauce",
+                    "prices": {
+                        "student": 2.15,
+                        "employee": 4.7,
+                        "guest": 5.7
+                    }
+                },
+                {
+                    "category": "Angebot 2",
+                    "description": "Vegane Pho-Vietnamesische Reisnudelsuppe mit Gemüse und Erdnüssen",
+                    "prices": {
+                        "student": 2.95,
+                        "employee": 5.5,
+                        "guest": 6.5
+                    }
+                },
+                {
+                    "category": "Angebot 4",
+                    "description": "Vollkornpenne mit gebratenen Hähnchenbruststreifen, Bohnen und Cherrytomaten, dazu Basilikum-Mandel-Pesto",
+                    "prices": {
+                        "student": null,
+                        "employee": null,
+                        "guest": null
+                    }
+                },
+                {
+                    "category": "Tagesangebot - Snack",
+                    "description": "Gratiniertes Tomate-Mozzarella-Baguette mit Basilikumpesto",
+                    "prices": {
+                        "student": 2.95,
+                        "employee": 5.5,
+                        "guest": 6.5
+                    }
+                },
+                {
+                    "category": "Dessert 1",
+                    "description": "Chiasamenpudding mit roter Grütze",
+                    "prices": {
+                        "student": 1.0,
+                        "employee": 1.5,
+                        "guest": 1.5
+                    }
+                },
+                {
+                    "category": "Dessert 2",
+                    "description": "Schokoladenmousse",
+                    "prices": {
+                        "student": 1.5,
+                        "employee": 2.0,
+                        "guest": 2.0
+                    }
+                }
+            ]
+        }
+    },
+    "trmnl": {
+        "user": {
+            "id": 1,
+            "name": "name",
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "locale": "en",
+            "time_zone": "UTC",
+            "time_zone_iana": "Etc/UTC",
+            "utc_offset": 0
+        },
+        "device": {
+            "friendly_id": "ABC123",
+            "percent_charged": 85.0,
+            "wifi_strength": 90,
+            "height": 480,
+            "width": 800
+        },
+        "system": {
+            "timestamp_utc": 1782984110
+        },
+        "plugin_settings": {
+            "instance_name": "instance_name",
+            "strategy": "polling",
+            "dark_mode": "no",
+            "polling_headers": "",
+            "polling_url": "",
+            "custom_fields_values": {}
+        }
+    }
+}
